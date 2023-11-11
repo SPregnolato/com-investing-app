@@ -3,14 +3,12 @@
 
 import streamlit as st
 import numpy as np
-import investpy
-
 import yfinance as yf
 
 
 def get_last_price(ticker: str) -> float:
     # Get the historical data for the last day
-    historical_data = data = yf.download(ticker, period="1d")
+    historical_data = yf.download(ticker, period="1d")
     return historical_data["Close"].iloc[-1]
 
 
