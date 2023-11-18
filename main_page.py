@@ -5,6 +5,7 @@ import streamlit as st
 import numpy as np
 import yfinance as yf
 import pandas as pd
+from com_investing_logic.ComProcessor import ComProcessor
 
 
 @st.cache_data
@@ -50,8 +51,8 @@ def main():
     )
 
     if ticker:
-        purchase_price_today = get_last_price(ticker)
-        st.write(f"The current closing price for today is: {purchase_price_today:.1f}")
+        current_price = get_last_price(ticker)
+        st.write(f"The current closing price for today is: {current_price:.1f}")
 
         df = import_users_investments()
 
@@ -59,16 +60,16 @@ def main():
             # Display the table
 
             st.table(df)
-            purchase_prices = df["purchase price"].values  # euro/stock --> d
-            purchase_quantities = df["purchase qty"].values  # euro --> m
+            price_array = df["purchase price"].values  # euro/stock --> d
+            qty_array = df["purchase qty"].values  # euro --> m
 
-            com = np.dot(purchase_prices, purchase_quantities) / sum(
-                purchase_quantities
-            )
-            com_relative = ((purchase_price_today - com) / com) * 100
-            st.write(f"The com of your current position is: {com:.1f}")
+            comProcessor = ComProcessor(current_price, price_array, qty_array)
+            comProcessor.calculate_com()
+            comProcessor.calculate_com_relative()
+
+            st.write(f"The com of your current position is: {comProcessor.com:.1f}")
             st.write(
-                f"The current price for {ticker} is {com_relative:.1f}% of your com"
+                f"The current price for {ticker} is {comProcessor.com_relative:.1f}% of your com"
             )
 
 

@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "com-investing-app"
+version = "0.1.0"
+description = ""
+authors = ["SPregnolato <s.pregnolato@pm.me>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+com-investing-logic = {git = "git@github.com:SPregnolato/com-investing-logic.git", develop = true}
+streamlit = "^1.28.2"
+numpy = "^1.26.2"
+yfinance = "^0.2.32"
+
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.26.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
