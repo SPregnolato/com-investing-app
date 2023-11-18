@@ -1,1 +1,1 @@
-# com-trading-strategy
+# com-trading-app
